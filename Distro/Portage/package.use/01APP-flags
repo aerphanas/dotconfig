@@ -1,0 +1,10 @@
+media-libs/mesa -llvm
+media-libs/libsndfile  minimal
+media-video/obs-studio pulseaudio speex truetype ssl browser v4l
+media-sound/pulseaudio bluetooth
+net-wireless/bluez experimental deprecated
+media-libs/freetype -harfbuzz
+media-sound/moc ffmpeg
+app-text/ghostscript-gpl cups
+net-wireless/lorcon python
+media-video/mediainfo -wxwidgets

@@ -1,0 +1,6 @@
+sys-kernel/linux-firmware @BINARY-REDISTRIBUTABLE
+sys-firmware/intel-microcode intel-ucode
+media-fonts/mikachan-font-ttf free-noncomm
+media-fonts/corefonts MSttfEULA
+app-arch/unrar unRAR
+app-editors/vscode Microsoft-vscode
