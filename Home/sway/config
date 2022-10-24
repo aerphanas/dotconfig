@@ -218,13 +218,16 @@ bar {
 	}
 }
 
+title_align center
+
 default_border pixel 5
 client.placeholder #242424 #242424 #242424
 client.background #242424 #242424 #242424
-client.focused #4A4A4A #4A4A4A #e5e5e5 #4A4A4A
-client.unfocused #4A4A4A #222222 #aaaaaa #222222
+client.unfocused  #3b4252 #3b4252 #d8dee9
+client.focused #4c566a #4c566a #d8dee9
 client.focused_inactive #4A4A4A #222222 #a9a9a9 #222222
 client.urgent #4A4A4A #4A4A4A #f7f7f7 #4A4A4A
+client.focused_tab_title #4c566a #4c566a #d8dee9
 
 include /etc/sway/config.d/*
 
@@ -232,7 +235,10 @@ input * {
 	xkb_layout "us"
 	xkb_variant "colemak"
 }
+
 gaps inner 10
+smart_borders on
+smart_gaps on
 
 seat seat0 xcursor_theme capitaine-cursors 48
 set $MOUSE 0:1336:USB_OPTICAL_MOUSE 
@@ -255,8 +261,14 @@ bindsym $ps2 exec grim -g "$(slurp)" - | wl-copy
 bindsym $ps3 exec grim $psf
 bindsym $ps4 exec grim -g "$(slurp)" $psf
 
-bindsym XF86MonBrightnessDown exec light -U 2
-bindsym XF86MonBrightnessUp exec light -A 4
+bindsym $mod+y exec light -U 4
+bindsym $mod+u exec light -A 4
+#bindsym XF86MonBrightnessDown exec light -U 2
+#bindsym XF86MonBrightnessUp exec light -A 4
+
+bindsym XF86AudioRaiseVolume exec pw-volume change +1%
+bindsym XF86AudioLowerVolume exec pw-volume change -1%
+bindsym XF86AudioMute exec pw-volume mute toggle
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {

@@ -1,0 +1,25 @@
+# `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
+exec "gtkgreet -s /etc/greetd/config.css -l; swaymsg exit"
+
+input * {
+	xkb_layout "us"
+	xkb_variant "colemak"
+}
+
+seat seat0 xcursor_theme capitaine-cursors 48
+set $MOUSE 0:1336:USB_OPTICAL_MOUSE 
+input $MOUSE left_handed enabled
+
+bindsym Mod4+shift+x exec swaynag \
+-t warning \
+-m 'What do you want to do?' \
+-b 'Poweroff' 'sh poweroff' \
+-b 'Reboot' 'sh reboot'
+
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Nordic-Standard'
+    gsettings set $gnome-schema icon-theme 'Nordic'
+}
+
+#include /etc/sway/config
