@@ -6,14 +6,23 @@
     ];
 
   boot = {
+    consoleLogLevel = 0;
     kernelModules = [ "kvm-intel" ];
+    kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = [ ];
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        consoleMode = "keep";
+        memtest86.enable = true;
+        configurationLimit = 7;
+      };
       efi.canTouchEfiVariables = true;
     };
     initrd = {
       enable = true;
+      verbose = true;
+      compressor = "cat";
       supportedFilesystems = [ "btrfs" "ext4" ];
       availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" "rtsx_pci_sdmmc" ];
       kernelModules = [ "dm-snapshot" ];
@@ -47,5 +56,21 @@
 
   swapDevices = [ ];
 
+  hardware = {
+    opengl = {
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = [
+        pkgs.intel-compute-runtime
+        pkgs.intel-media-driver
+        pkgs.vaapiIntel
+        pkgs.vaapiVdpau
+        pkgs.libvdpau-va-gl
+      ];
+    };
+    cpu.intel.updateMicrocode = true;
+    pulseaudio.enable = false;
+    bluetooth.enable = true;
+  };
   #hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

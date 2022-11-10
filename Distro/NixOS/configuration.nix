@@ -1,13 +1,15 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
+
+  time.timeZone = "Asia/Jakarta";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console.keyMap = "colemak";
 
   networking = {
     hostName = "nixos-20aws1hl002";
+    nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     useDHCP = false;
     interfaces.enp0s25.useDHCP = true;
     interfaces.wlp3s0.useDHCP = true;
@@ -22,6 +24,7 @@
         1194                          #Openvpn
         27036                         #Steam ; Remote Play
         27015                         #Steam ; SRCDS Rcon port
+        3389                          #Gnome Rdp
         ];
       allowedUDPPorts = [
         443                           #HTTPS
@@ -35,6 +38,8 @@
         3478                          #Steam : Steamworks P2P Networking and Steam Voice Chat
         4379                          #Steam : Steamworks P2P Networking and Steam Voice Chat
         4380                          #Steam : Steamworks P2P Networking and Steam Voice Chat
+        3389                          #Gnome Rgp
+        1900                          #Gnome Rygel
       ];
       allowedTCPPortRanges = [
         { from = 27015; to = 27030; } # Steam : To log into Steam and download content
@@ -50,11 +55,6 @@
       ];
     };
   };
-
-  time.timeZone = "Asia/Jakarta";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  console.keyMap = "colemak";
 
   services = {
     xserver = {
@@ -76,22 +76,22 @@
     };
     gnome = {
       games.enable = false;
-      chrome-gnome-shell.enable = true;
       gnome-keyring.enable = true;
       gnome-initial-setup.enable = false;
       gnome-online-accounts.enable = true;
       gnome-remote-desktop.enable = true;
-      rygel.enable = true;
       gnome-user-share.enable = true;
+      gnome-settings-daemon.enable = true;
+      gnome-online-miners.enable = true;
+      chrome-gnome-shell.enable = true;
+      rygel.enable = true;
       tracker.enable = true;
       sushi.enable = true;
       tracker-miners.enable = true;
-      gnome-settings-daemon.enable = true;
       core-shell.enable = true;
       core-utilities.enable = true;
       evolution-data-server.enable = true;
       glib-networking.enable = true;
-      gnome-online-miners.enable = true;
     };
     tlp = {
       enable = true;
@@ -102,23 +102,6 @@
     fstrim.enable = true;
     flatpak.enable = true;
     printing.enable = true;
-  };
-
-  hardware = {
-    opengl = {
-      driSupport = true;
-      driSupport32Bit = true;
-      extraPackages = [
-        pkgs.intel-compute-runtime
-        pkgs.intel-media-driver
-        pkgs.vaapiIntel
-        pkgs.vaapiVdpau
-        pkgs.libvdpau-va-gl
-      ];
-    };
-    cpu.intel.updateMicrocode = true;
-    pulseaudio.enable = false;
-    bluetooth.enable = true;
   };
 
   security = {
@@ -143,30 +126,37 @@
       isNormalUser = true;
       name = "adivin";
       description = "Muhammad Aviv Burhanudin";
+      shell = pkgs.fish;
+      createHome = true;
       home = "/home/adivin";
       autoSubUidGidRange = true;
       extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
-      packages = [ pkgs.git pkgs.firefox pkgs.gimp pkgs.libreoffice pkgs.vscode-fhs ];
+      packages = with pkgs; [
+        git
+        firefox
+        gimp
+        libreoffice
+        vscode-fhs
+        obs-studio
+        neofetch
+      ];
     };
   };
 
-  nix = {
-    allowedUsers = [ "adivin" ];
-    trustedUsers = [ "root" "adivin" ];
-  };
-  nixpkgs.config.allowUnfree = true;
-
   environment = {
+    homeBinInPath = true;
+    localBinInPath = true;
     systemPackages = with pkgs; [
+      # archive
+      rar
+      unrar
+      zip
+      unzip
+
       # virtualisation
       virt-manager
 
-      # firefox
-      # gimp
-      # libreoffice
-
       # SystemTools
-      micro
       wget
       gparted
 
@@ -189,14 +179,36 @@
 
       # customize
       gnome.gnome-tweaks
+      papirus-icon-theme
     ];
   };
-
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+      redhat-official-fonts
+      ubuntu_font_family
+      hack-font
+      corefonts
+    ];
+  };
   programs = {
     mtr.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
+    };
+    fish = {
+      enable = true;
+
     };
     dconf.enable = true;
   };
@@ -209,6 +221,19 @@
     };
   };
 
-  system.stateVersion = "22.05";
-
+  nix = {
+    allowedUsers = [ "adivin" ];
+    trustedUsers = [ "root" "adivin" ];
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
+  nixpkgs.config.allowUnfree = true;
+  system = {
+    copySystemConfiguration = true;
+    stateVersion = "22.05";
+  };
 }
