@@ -4,12 +4,12 @@
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
-
+    
   boot = {
     consoleLogLevel = 0;
-    kernelModules = [ "kvm-intel" ];
-    kernelPackages = pkgs.linuxPackages_latest;
-    extraModulePackages = [ ];
+    kernelModules = [ "kvm-intel" "v4l2loopback" ];
+    kernelPackages = pkgs.linuxPackages_6_0;
+    extraModulePackages = [ pkgs.linuxKernel.packages.linux_6_0.v4l2loopback ];
     loader = {
       systemd-boot = {
         enable = true;
@@ -43,13 +43,13 @@
       device = "/dev/disk/by-uuid/0a1ae8b0-cdc4-4708-a551-2253229c91e5";
       fsType = "btrfs";
     };
-
+    
   fileSystems."/home/adivin" = {
       device = "/dev/disk/by-uuid/3efcee78-2bc1-4311-9e0a-8105eabfea36";
       fsType = "ext4";
   };
-
-  fileSystems."/boot" = {
+  
+  fileSystems."/boot" = { 
       device = "/dev/disk/by-uuid/152A-EDFF";
       fsType = "vfat";
     };
@@ -63,7 +63,7 @@
       extraPackages = [
         pkgs.intel-compute-runtime
         pkgs.intel-media-driver
-        pkgs.vaapiIntel
+        pkgs.vaapiIntel         
         pkgs.vaapiVdpau
         pkgs.libvdpau-va-gl
       ];
@@ -71,6 +71,6 @@
     cpu.intel.updateMicrocode = true;
     pulseaudio.enable = false;
     bluetooth.enable = true;
-  };
+  }; 
   #hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
