@@ -51,6 +51,12 @@
         { from = 50000; to = 65535; } # Discord
       ];
     };
+    nat = {
+      enable = true;
+      internalInterfaces = ["ve-+"];
+      externalInterface = "enp0s25";
+      enableIPv6 = true;
+    };
   };
   
 }
