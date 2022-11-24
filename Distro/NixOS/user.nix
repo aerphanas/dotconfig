@@ -16,15 +16,15 @@ users = {
         libreoffice
         vscode-fhs
         obs-studio
-        neofetch
         megacmd
         git
         ngrok
-        zim
         tdesktop
-        cli-visualizer
         libsForQt5.kdenlive
         thunderbird
+        gnomeExtensions.pop-shell
+        openal
+        cava
       ];
     };
   };

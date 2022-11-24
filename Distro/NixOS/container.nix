@@ -12,7 +12,7 @@
         useDHCP = false;
         firewall = {
           enable = true;
-          allowedTCPPorts = [ 3000 ];
+          allowedTCPPorts = [ 3000 4000 ];
         };
       };
       
@@ -53,15 +53,18 @@
       
       nixpkgs.config = {
         packageOverrides = super: let self = super.pkgs; in {
-          HaskellEnv = self.haskell.packages.ghc924.ghcWithPackages (
+          HaskellEnv = self.haskell.packages.ghc924.ghcWithHoogle (
             haskellPackages: with haskellPackages; [
+            
               # libraries
               base
               containers
               hakyll
+              
               # tools
               haskell-language-server
               cabal-install
+              
             ]
           );
         };
@@ -110,6 +113,54 @@
         git
       ];
       
+      system.stateVersion = "22.05";
+    };
+  };
+  
+  containers.mariadb-server = {
+    privateNetwork = true;
+    hostAddress = "192.168.100.14";
+    localAddress = "192.168.100.15";
+    config = { config, pkgs, ... } : {
+      boot.isContainer = true;
+      networking = {
+        hostName = "mariadb-server";
+        useDHCP = false;
+        firewall = {
+          enable = true;
+          allowedTCPPorts = [ 3306 ];
+        };
+      };
+      services = {
+        mysql = {
+          enable = true;
+          package = pkgs.mariadb;
+        };
+      };
+      system.stateVersion = "22.05";
+    };
+  };
+
+  containers.redis-server = {
+    privateNetwork = true;
+    hostAddress = "192.168.100.16";
+    localAddress = "192.168.100.17";
+    config = { config, pkgs, ... } : {
+      boot.isContainer = true;
+      networking = {
+        hostName = "redis-server";
+        useDHCP = false;
+        firewall.enable = true;
+      };
+      services = {
+        redis.servers.tartarus = {
+          enable = true;
+          syslog = true;
+          port = 6379;
+          databases = 2;
+          openFirewall = true;
+        };
+      };
       system.stateVersion = "22.05";
     };
   };
