@@ -4,9 +4,9 @@ let nixos-unstable = import <nixos-unstable> {
       config = removeAttrs config.nixpkgs.config [ "packageOverrides" ];
     };
 in {
-  disabledModules = [
-    "services/networking/minidlna.nix"
-  ];
+  #disabledModules = [
+  #  "services/networking/minidlna.nix"
+  #];
   
   imports = [ 
     ./hardware-configuration.nix
@@ -15,13 +15,13 @@ in {
     ./service.nix
     ./system.nix
     ./user.nix
-    <nixos-unstable/nixos/modules/services/networking/minidlna.nix>
+    #<nixos-unstable/nixos/modules/services/networking/minidlna.nix>
   ];
   
   nix = {
-    allowedUsers = [ "adivin" ];
-    trustedUsers = [ "root" "adivin" ];
     settings = {
+      allowed-users = [ "adivin" ];
+      trusted-users = [ "root" "adivin" ];
       experimental-features = [ "nix-command" "flakes" ];
       # for Haskell.nix
       trusted-public-keys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
@@ -44,8 +44,7 @@ in {
   
   system = {
     copySystemConfiguration = true;
-    stateVersion = "22.05";
+    stateVersion = "22.11";
   };
   
 }
-

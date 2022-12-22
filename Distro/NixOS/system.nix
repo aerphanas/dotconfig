@@ -7,6 +7,9 @@
   environment = {
     homeBinInPath = true;
     localBinInPath = true;
+    sessionVariables = {
+      DOTNET_ROOT = "${pkgs.dotnet-sdk_7}";
+    };
     gnome.excludePackages = with pkgs; [
       gnome.geary
       gnome.gnome-maps
@@ -94,6 +97,7 @@
       vendor.completions.enable = true;
     };
     dconf.enable = true;
+    java.enable = true;
   };
   
   virtualisation = {

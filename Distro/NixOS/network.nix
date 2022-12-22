@@ -5,6 +5,7 @@
     nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
     useDHCP = false;
     interfaces.enp0s25.useDHCP = true;
+    interfaces.enp0s25.wakeOnLan.enable = true;
     interfaces.wlp3s0.useDHCP = true;
     firewall = {
       enable = true;

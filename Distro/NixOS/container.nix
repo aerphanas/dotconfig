@@ -4,9 +4,15 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
+    allowedDevices = [
+      {
+        modifier = "mrw";
+        node = "/dev/snd";
+      }
+    ];
+    bindMounts."/dev/snd".hostPath = "/dev/snd";
     config = { config, pkgs, ... } : {
       boot.isContainer = true;
-      
       networking = {
         hostName = "haskell-devel";
         useDHCP = false;
@@ -32,6 +38,7 @@
             openvscode-server
             elmPackages.elm
             HaskellEnv
+            sox
           ];
         };
       };
@@ -42,7 +49,7 @@
           hasklig
         ];
       };
-      
+      sound.enable = true;
       programs = {
         gnupg.agent = {
           enable = true;
@@ -53,31 +60,29 @@
       
       nixpkgs.config = {
         packageOverrides = super: let self = super.pkgs; in {
-          HaskellEnv = self.haskell.packages.ghc924.ghcWithHoogle (
+          HaskellEnv = self.haskell.packages.ghc902.ghcWithPackages (
             haskellPackages: with haskellPackages; [
-            
               # libraries
-              base
-              containers
               hakyll
               
               # tools
               haskell-language-server
               cabal-install
-              
+              ghci-dap
+              haskell-debug-adapter
             ]
           );
         };
       };
       
-      system.stateVersion = "22.05";
+      system.stateVersion = "22.11";
     };
   };
 
   containers.lamp-server = {
     privateNetwork = true;
-    hostAddress = "192.168.100.12";
-    localAddress = "192.168.100.13";
+    hostAddress = "192.168.100.16";
+    localAddress = "192.168.100.17";
     config = { config, pkgs, ... } : {
       boot.isContainer = true;
       
@@ -113,14 +118,14 @@
         git
       ];
       
-      system.stateVersion = "22.05";
+      system.stateVersion = "22.11";
     };
   };
   
   containers.mariadb-server = {
     privateNetwork = true;
-    hostAddress = "192.168.100.14";
-    localAddress = "192.168.100.15";
+    hostAddress = "192.168.100.18";
+    localAddress = "192.168.100.19";
     config = { config, pkgs, ... } : {
       boot.isContainer = true;
       networking = {
@@ -137,14 +142,14 @@
           package = pkgs.mariadb;
         };
       };
-      system.stateVersion = "22.05";
+      system.stateVersion = "22.11";
     };
   };
 
   containers.redis-server = {
     privateNetwork = true;
-    hostAddress = "192.168.100.16";
-    localAddress = "192.168.100.17";
+    hostAddress = "192.168.100.20";
+    localAddress = "192.168.100.21";
     config = { config, pkgs, ... } : {
       boot.isContainer = true;
       networking = {
@@ -161,7 +166,7 @@
           openFirewall = true;
         };
       };
-      system.stateVersion = "22.05";
+      system.stateVersion = "22.11";
     };
   };
 

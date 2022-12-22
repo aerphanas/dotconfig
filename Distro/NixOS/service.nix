@@ -9,7 +9,7 @@
       xkbVariant = "colemak";
       libinput.enable = true;
       videoDrivers = [ "modesetting" ];
-      useGlamor = true;
+      #useGlamor = true;
     };
     pipewire = {
       enable = true;
@@ -27,7 +27,7 @@
       gnome-user-share.enable = true;
       gnome-settings-daemon.enable = true;
       gnome-online-miners.enable = true;
-      chrome-gnome-shell.enable = true;
+      gnome-browser-connector.enable = true;
       rygel.enable = true;
       tracker.enable = true;
       sushi.enable = true;
@@ -66,6 +66,7 @@
       enable = true;
       startWhenNeeded = true;
     };
+
   };
   
 }
