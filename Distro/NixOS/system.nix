@@ -18,11 +18,11 @@
     ];
     systemPackages = with pkgs; [
       # screensaver
-      pipes
-      terminal-parrot
-      asciiquarium
-      globe-cli
-      cbonsai
+      # pipes
+      # terminal-parrot
+      # asciiquarium
+      # globe-cli
+      # cbonsai
       
       # archive
       rar
@@ -35,23 +35,23 @@
       
       # SystemTools
       wget
-      gparted
+      # gparted
       
       # FileSystemSupport
-      zfs
+      # zfs
       lvm2
       exfat
       ntfs3g
-      hfsprogs
-      jfsutils
+      # hfsprogs
+      # jfsutils
       udftools
-      xfsprogs
+      # xfsprogs
       e2fsprogs
-      f2fs-tools
+      # f2fs-tools
       dosfstools
       util-linux
       cryptsetup
-      nilfs-utils
+      # nilfs-utils
       btrfs-progs
       
       # customize
@@ -105,10 +105,10 @@
     docker.enable = true;
   };
   
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-  };
+  #zramSwap = {
+  #  enable = true;
+  #  algorithm = "zstd";
+  #};
   
   security = {
     rtkit.enable = true;

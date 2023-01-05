@@ -49,8 +49,8 @@
       passwordAuthentication = true;
     };
     minidlna = {
-      enable = true;
-      openFirewall = true;
+      enable = false;
+      openFirewall = false;
       settings.wide_links = "yes";
       settings.inotify = "yes";
       settings.log_level = "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=warn";

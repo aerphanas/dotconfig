@@ -11,20 +11,42 @@ users = {
       autoSubUidGidRange = true;
       extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
       packages = with pkgs; [
-        firefox-wayland
+        firefox
         gimp
         libreoffice
         vscode-fhs
         obs-studio
         megacmd
         git
-        ngrok
+        # ngrok
         tdesktop
         libsForQt5.kdenlive
         thunderbird
-        gnomeExtensions.pop-shell
         openal
         cava
+        qpwgraph
+        easyeffects
+        audacity
+        # jetbrains.idea-community
+        maven
+        gnome-builder
+        flatpak-builder
+        dotnet-sdk_7
+        discord
+        jupyter
+        ihaskell
+        python3Full
+        python310Packages.pip
+        python310Packages.jupyterlab
+        clojure
+        emacs-gtk
+        leiningen
+        #roswell
+        # sbcl
+        haskellPackages.yst
+        nodejs
+        ran
+        racket
       ];
     };
   };

@@ -29,7 +29,7 @@
           description = "orpheus user";
           createHome = true;
           home = "/home/orpheus";
-          extraGroups = [ "users" ];
+          extraGroups = [ "users" "wheel" ];
           packages = with pkgs; [
             git
             curl
@@ -39,6 +39,7 @@
             elmPackages.elm
             HaskellEnv
             sox
+            cabal2nix
           ];
         };
       };
@@ -57,7 +58,7 @@
           pinentryFlavor = "curses";
         };
       };
-      
+
       nixpkgs.config = {
         packageOverrides = super: let self = super.pkgs; in {
           HaskellEnv = self.haskell.packages.ghc902.ghcWithPackages (
@@ -68,12 +69,14 @@
               # tools
               haskell-language-server
               cabal-install
-              ghci-dap
-              haskell-debug-adapter
+              #ghci-dap
+              #haskell-debug-adapter
             ]
           );
         };
       };
+      
+      security.sudo.enable = true;
       
       system.stateVersion = "22.11";
     };
