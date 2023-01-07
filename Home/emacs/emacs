@@ -4,6 +4,7 @@
 (require 'powerline)
 (require 'drag-stuff)
 (require 'linum-relative)
+(require 'whitespace)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
@@ -33,6 +34,8 @@
 (set-face-attribute 'default nil :font "Fira Code")
 (set-frame-font "Fira Code" nil t)
 
+(global-visual-line-mode)
+(global-linum-mode)
 (global-set-key [f8] 'neotree-toggle)
 (global-hl-line-mode)
 (global-wakatime-mode)
@@ -45,6 +48,7 @@
 (drag-stuff-define-keys)
 
 (add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook 'visual-line-mode)
 
 (setq eshell-scroll-to-bottom-on-input t)
 (setq warning-minimum-level :emergency)
@@ -52,13 +56,11 @@
 (setq ring-bell-function 'ignore)
 (setq default-tab-width 2)
 (setq initial-frame-alist
-      '(
-        (width . 160) ; character
-        (height . 50) ; lines
-        ))
-(setq-default frame-title-format '("%f [%m]"))
-;(setq frame-title-format
-;  (concat "%b - emacs@" (system-name)))
+     '((width . 160)
+       (height . 50)))
+;(setq-default frame-title-format '("%f [%m]"))
+(setq frame-title-format
+  (concat "%b - emacs@" (system-name)))
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
