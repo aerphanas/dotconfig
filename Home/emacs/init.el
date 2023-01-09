@@ -26,7 +26,7 @@
    '(page-break-lines dashboard all-the-icons ubuntu-theme atom-one-dark-theme drag-stuff multiple-cursors powerline nord-theme markdown-preview-mode markdown-mode neotree linum-relative dracula-theme racket-mode wakatime-mode))
  '(powerline-default-separator 'bar)
  '(powerline-gui-use-vcs-glyph t)
- '(wakatime-api-key "waka_19cdfb73-3c0f-475d-a6f0-485d1809e191")
+ '(wakatime-api-key "please use your api key")
  '(wakatime-cli-path "~/.wakatime/wakatime-cli"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
